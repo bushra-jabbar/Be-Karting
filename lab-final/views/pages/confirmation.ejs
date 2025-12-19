@@ -1,0 +1,24 @@
+<div class="container text-center mt-5 py-5 text-white">
+    <div class="card bg-dark border-danger p-5 mx-auto shadow-lg" style="max-width: 600px; border-width: 2px;">
+        <div class="mb-4">
+            <i class="fas fa-check-circle text-success" style="font-size: 4rem;"></i>
+        </div>
+        
+        <h1 class="text-white fw-bold">Order Confirmed!</h1>
+        <p class="mt-3 text-secondary">Thank you for choosing <span class="text-danger fw-bold">Be-Karting</span>. Your racing gear is being prepared for dispatch.</p>
+        
+        <hr class="border-secondary my-4">
+        
+        <div class="bg-black p-3 rounded border border-secondary mb-4">
+            <h6 class="text-uppercase text-secondary small">Your Order ID</h6>
+            <h3 class="text-danger fw-bold mb-0"><%= orderId %></h3>
+        </div>
+
+        <p class="text-secondary small">A confirmation email has been sent to your provided address.</p>
+        
+        <div class="mt-4 d-grid gap-2 d-md-block">
+            <a href="/products" class="btn btn-danger px-5 py-2 fw-bold">Continue Shopping</a>
+            <a href="/" class="btn btn-outline-light px-5 py-2">Back to Home</a>
+        </div>
+    </div>
+</div>

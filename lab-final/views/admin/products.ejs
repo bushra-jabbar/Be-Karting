@@ -1,0 +1,38 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="text-dark">Product Inventory</h3>
+    <a href="/admin/products/add" class="btn btn-success">+ Add New Product</a>
+</div>
+
+<table class="table table-dark table-hover border-secondary">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% products.forEach(p => { %>
+        <tr>
+            <td><%= p.name %></td>
+            <td><%= p.category %></td>
+            <td>$<%= p.price %></td>
+            <td>
+                <a href="/admin/products/edit/<%= p._id %>" class="btn btn-sm btn-info text-white">Edit</a>
+                <a href="/admin/products/delete/<%= p._id %>" class="btn btn-sm btn-danger" onclick="return confirm('Delete this product?')">Delete</a>
+            </td>
+        </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<nav>
+    <ul class="pagination">
+        <% for(let i=1; i <= pages; i++) { %>
+            <li class="page-item <%= current == i ? 'active' : '' %>">
+                <a class="page-link bg-dark text-white" href="/admin/products?page=<%= i %>"><%= i %></a>
+            </li>
+        <% } %>
+    </ul>
+</nav>

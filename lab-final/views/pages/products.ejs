@@ -1,0 +1,100 @@
+<div class="container mt-4">
+    <h2 class="text-danger mb-4 text-center">Our Racing Products</h2>
+
+    <!-- CATEGORY FILTER -->
+    <form action="/products" method="GET" class="mb-5">
+        <div class="input-group mx-auto" style="max-width: 500px;">
+            <select name="category" class="form-select bg-dark text-white border-danger">
+                <option value="">All Categories</option>
+                <option value="Gear" <%= selectedCategory === 'Gear' ? 'selected' : '' %>>Gear</option>
+                <option value="Tires" <%= selectedCategory === 'Tires' ? 'selected' : '' %>>Tires</option>
+            </select>
+            <button class="btn btn-danger px-4" type="submit">Filter</button>
+        </div>
+    </form>
+        <!-- Removed stray button that referenced `product` outside loop -->
+
+
+    <!-- PRODUCTS GRID -->
+    <div class="row">
+        <% if (products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 bg-dark text-white border-secondary shadow">
+
+                        <img src="/images/<%= product.image %>"
+                             class="card-img-top"
+                             alt="<%= product.name %>"
+                             style="height: 200px; object-fit: cover;">
+
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="card-title text-danger"><%= product.name %></h5>
+                                <p class="card-text text-light small"><%= product.description %></p>
+                            </div>
+
+                            <div class="mt-3">
+                                <p class="h5 fw-bold">$<%= product.price %></p>
+
+                                                                <!-- AJAX Add to Cart button (with non-JS fallback) -->
+                                                                <button class="btn btn-outline-danger w-100 mt-2 add-to-cart-btn" data-id="<%= product._id %>">
+                                                                        Add to Cart
+                                                                </button>
+                                                                <noscript>
+                                                                    <form action="/products/add-to-cart/<%= product._id %>" method="POST">
+                                                                        <button type="submit" class="btn btn-outline-danger w-100 mt-2">Add to Cart</button>
+                                                                    </form>
+                                                                </noscript>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <div class="col-12 text-center text-white">
+                <p>No products found in this category.</p>
+            </div>
+        <% } %>
+    </div>
+
+    <!-- PAGINATION -->
+    <% if (pages > 1) { %>
+        <div class="container text-center mt-5">
+            <nav>
+                <ul class="pagination justify-content-center">
+
+                    <li class="page-item <%= current === 1 ? 'disabled' : '' %>">
+                        <a class="page-link bg-dark text-danger border-danger"
+                           href="/products?page=<%= current - 1 %><%= selectedCategory ? '&category=' + selectedCategory : '' %>">
+                           Previous
+                        </a>
+                    </li>
+
+                    <% for (let i = 1; i <= pages; i++) { %>
+                        <li class="page-item <%= current === i ? 'active' : '' %>">
+                            <a class="page-link <%= current === i ? 'bg-danger text-white' : 'bg-dark text-white border-danger' %>"
+                               href="/products?page=<%= i %><%= selectedCategory ? '&category=' + selectedCategory : '' %>">
+                                <%= i %>
+                            </a>
+                        </li>
+                    <% } %>
+
+                    <li class="page-item <%= current === pages ? 'disabled' : '' %>">
+                        <a class="page-link bg-dark text-danger border-danger"
+                           href="/products?page=<%= current + 1 %><%= selectedCategory ? '&category=' + selectedCategory : '' %>">
+                           Next
+                        </a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+    <% } %>
+
+    <!-- DEBUG (REMOVE AFTER TESTING) -->
+    <pre class="text-white mt-4">
+<%= JSON.stringify(session.cart, null, 2) %>
+    </pre>
+
+</div>
+<script src="/js/cart.js"></script>
